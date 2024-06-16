@@ -4,4 +4,4 @@ This is where Syntaxius team upload and discus their code for competitive progra
 
 Syntaxius team:
 Leader: MinamotoYuki
-Member: Raihan and Galih
+Member: Raihan203 and Klyrtos

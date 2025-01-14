@@ -1,5 +1,0 @@
-1. Masukkan n dan x
-2. cari nilai minimum
-3. traverse, seleksi mana yang valid
-4. karena output harus 5 digit, perlu algoritma untuk menghasilkan trailing zero didepan
-4.1 disini menggunakan trunc(log10(n)+1)

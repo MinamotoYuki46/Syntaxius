@@ -1,0 +1,1 @@
+{"name":"Local: permutasi","url":"d:\\Fauzan\\Code Project\\CP Technofair\\permutasi.cpp","tests":[{"id":1719565643966,"input":"3\n1 5 5","output":"3"},{"id":1719565651102,"input":"4\n1 2 3 4","output":"24"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\Fauzan\\Code Project\\CP Technofair\\permutasi.cpp","group":"local","local":true}

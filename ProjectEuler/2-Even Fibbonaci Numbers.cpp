@@ -45,37 +45,50 @@ void c_p_c(){
 #endif
 }
 
-int32_t main(){
-    c_p_c();
+
+// Find the sum of all the even-valued terms in the Fibonacci sequence
+// which do not exceed four million.
+
+
+vi fib(40); 
+
+void fibGenerator() {
+    fib[0] = 0;
+    fib[1] = 1;
+    for (int i = 2; i < fib.size(); i++) {
+        fib[i] = fib[i - 1] + fib[i - 2];
+    }
+}
+
+int32_t main() {
     ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
-    int n, k, id, dp[105][2005], w[2005], h[2005];
-    cin >> n >> k;
+    
+    fibGenerator(); 
 
-    for (int i = k; i > 0; i--) cin >> w[i] >> h[i];
-    for (int i = 0; i <= k; i++){
-        for (int j = 0; j <= n; j++){
-            if (!i || !j){
-                dp[i][j] = 0;
-                continue;
-            }
-            else if (j >= w[i]) dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - w[i]] + h[i]);
-            else dp[i][j] = dp[i - 1][j];
-        }
+    //Answer: 4613732
+
+
+
+    // Solusi 1
+    // int sum = 0;
+    // for (int i = 1; i < fib.size(); i++) {
+    //     if (!(fib[i] & 1) && fib[i] <= 4000000) { 
+    //         sum += fib[i];
+    //     }
+    // }
+
+
+    // Solusi 2
+    int a = 2, b = 8, sum = 2;
+    while (b <= 4e6){
+        sum += b;
+        int next = 4 * b + a;
+        a = b;
+        b = next;
     }
+    cout << sum;
 
-    for(int i = 1; i <= n; i++){
-        if (dp[k][n] == dp[k][i]){
-            id = i;
-            break;
-        }
-    }
 
-    for(int i = k; i > 0; i--){
-        if (dp[i][id] == dp[i - 1][id - w[i]] + h[i]){
-            cout << k - i + 1 << '\n';
-            id -= w[i];
-        }
-    }
-
+    // cout << sum << endl;
     return 0;
 }

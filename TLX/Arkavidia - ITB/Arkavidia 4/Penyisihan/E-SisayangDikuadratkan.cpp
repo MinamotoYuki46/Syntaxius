@@ -45,35 +45,31 @@ void c_p_c(){
 #endif
 }
 
-int32_t main(){
-    c_p_c();
+int32_t main() {
     ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
-    int n, k, id, dp[105][2005], w[2005], h[2005];
-    cin >> n >> k;
 
-    for (int i = k; i > 0; i--) cin >> w[i] >> h[i];
-    for (int i = 0; i <= k; i++){
-        for (int j = 0; j <= n; j++){
-            if (!i || !j){
-                dp[i][j] = 0;
+    int tc; cin >> tc;
+    while (tc--) {
+        int n, q; cin >> n >> q;
+        vi a(n); REP(i, n) cin >> a[i];
+
+        mii freq;
+        for (int x : a) freq[x]++;
+
+        while (q--) {
+            int x; cin >> x;
+            if (x == 1) {
+                cout << 0 << '\n';
                 continue;
             }
-            else if (j >= w[i]) dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - w[i]] + h[i]);
-            else dp[i][j] = dp[i - 1][j];
-        }
-    }
 
-    for(int i = 1; i <= n; i++){
-        if (dp[k][n] == dp[k][i]){
-            id = i;
-            break;
-        }
-    }
+            int sum = 0;
+            for (auto& [val, cnt] : freq) {
+                int mod = val % x;
+                sum += cnt * mod * mod;
+            }
 
-    for(int i = k; i > 0; i--){
-        if (dp[i][id] == dp[i - 1][id - w[i]] + h[i]){
-            cout << k - i + 1 << '\n';
-            id -= w[i];
+            cout << sum << '\n';
         }
     }
 

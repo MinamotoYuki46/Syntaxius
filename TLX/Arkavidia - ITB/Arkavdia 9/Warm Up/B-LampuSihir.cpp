@@ -46,36 +46,36 @@ void c_p_c(){
 }
 
 int32_t main(){
-    c_p_c();
+    //c_p_c();
     ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
-    int n, k, id, dp[105][2005], w[2005], h[2005];
-    cin >> n >> k;
+    int n, k; cin >> n >> k;
+    vi num (n), res (n, 0); REP(i, n) cin >> num[i];
 
-    for (int i = k; i > 0; i--) cin >> w[i] >> h[i];
-    for (int i = 0; i <= k; i++){
-        for (int j = 0; j <= n; j++){
-            if (!i || !j){
-                dp[i][j] = 0;
-                continue;
+    sort(all(num));
+
+    vector<bool> flag (n, 0);
+
+    while(k > 0){
+        for(int i = 0; i < n; i++){
+            if (k <= num[i] && !flag[i]){
+                res[i] = res[i] + abs(k - num[i]);
+                flag[i] = 1;
             }
-            else if (j >= w[i]) dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - w[i]] + h[i]);
-            else dp[i][j] = dp[i - 1][j];
+            else if (k > num[i]) {
+                res[i]++;
+            }
         }
-    }
 
-    for(int i = 1; i <= n; i++){
-        if (dp[k][n] == dp[k][i]){
-            id = i;
-            break;
-        }
-    }
+        // cout << k << '\n';
+        // REP(i, n) cout << res[i] << ' ';
+        // cout << '\n';
+        k >>= 1;
 
-    for(int i = k; i > 0; i--){
-        if (dp[i][id] == dp[i - 1][id - w[i]] + h[i]){
-            cout << k - i + 1 << '\n';
-            id -= w[i];
-        }
+        
     }
+    sort(all(res));
+
+    cout << res[0];
 
     return 0;
 }

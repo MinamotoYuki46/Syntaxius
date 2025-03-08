@@ -46,35 +46,25 @@ void c_p_c(){
 }
 
 int32_t main(){
-    c_p_c();
+    //c_p_c();
     ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
-    int n, k, id, dp[105][2005], w[2005], h[2005];
-    cin >> n >> k;
+    w(tc){
+        int n, k; cin >> n >> k;
+        vi a(n), aa(n + 1);
+        
+        REP(i, n) cin >> a[i];
+        sort(all(a));
+        REP(i, n) aa[i + 1] = a[i];
 
-    for (int i = k; i > 0; i--) cin >> w[i] >> h[i];
-    for (int i = 0; i <= k; i++){
-        for (int j = 0; j <= n; j++){
-            if (!i || !j){
-                dp[i][j] = 0;
-                continue;
-            }
-            else if (j >= w[i]) dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - w[i]] + h[i]);
-            else dp[i][j] = dp[i - 1][j];
-        }
-    }
+        vi dp (n + 1);
+        FOR(i, 1, k) dp[i] = INT_MAX;
+        int res = INT_MAX;
 
-    for(int i = 1; i <= n; i++){
-        if (dp[k][n] == dp[k][i]){
-            id = i;
-            break;
+        FOR(i, k, n + 1){
+            res = min(res, dp[i - k] - aa[i - k + 1]);
+            dp[i] = aa[i] + res;
         }
-    }
-
-    for(int i = k; i > 0; i--){
-        if (dp[i][id] == dp[i - 1][id - w[i]] + h[i]){
-            cout << k - i + 1 << '\n';
-            id -= w[i];
-        }
+        cout << dp[n] << '\n';
     }
 
     return 0;

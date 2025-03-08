@@ -45,37 +45,25 @@ void c_p_c(){
 #endif
 }
 
+// Problem 1
+
+// If we list all the natural numbers below 10
+// that are multiples of3 or 5, we get 3, 5, 6 and 9. The sum of these multiples is 23.
+
+// Find the sum of all the multiples of
+// 3 or 5 below 1000 .
+
+
+
+
+int firstSum(int x){
+    return x * (x + 1) /2;
+}
+
 int32_t main(){
-    c_p_c();
+    //c_p_c();
     ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
-    int n, k, id, dp[105][2005], w[2005], h[2005];
-    cin >> n >> k;
-
-    for (int i = k; i > 0; i--) cin >> w[i] >> h[i];
-    for (int i = 0; i <= k; i++){
-        for (int j = 0; j <= n; j++){
-            if (!i || !j){
-                dp[i][j] = 0;
-                continue;
-            }
-            else if (j >= w[i]) dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - w[i]] + h[i]);
-            else dp[i][j] = dp[i - 1][j];
-        }
-    }
-
-    for(int i = 1; i <= n; i++){
-        if (dp[k][n] == dp[k][i]){
-            id = i;
-            break;
-        }
-    }
-
-    for(int i = k; i > 0; i--){
-        if (dp[i][id] == dp[i - 1][id - w[i]] + h[i]){
-            cout << k - i + 1 << '\n';
-            id -= w[i];
-        }
-    }
+    cout << firstSum((1000-1)/3) * 3 +  firstSum((1000-1)/5) * 5 - firstSum((1000-1)/15) * 15;
 
     return 0;
 }

@@ -49,14 +49,39 @@ int32_t main(){
     //c_p_c();
     ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
 
-    int n, k; cin >> n >> k;
+    int x, a, b; cin >> x >> a >> b;
+    string arka, vidi; cin >> arka >> vidi;
 
-    if (k > n || k < (-n + 2)) {
-        cout << "NO";
-        return 0;
+    vi turn (x, -1);
+
+    for(int i = 0; i < x; i++){
+        int HP = a, HP_REGEN = b;
+        string evilVidi = vidi;
+
+        if (evilVidi[i] == '#') evilVidi[i] = '.';
+        else evilVidi[i] = '#';
+
+        for(int j = 0; j < x; j++){
+            HP += HP_REGEN;
+            if (arka[j] == evilVidi[j]){
+                if (arka[j] == '#'){
+                    HP -= 3 * HP_REGEN;
+                }
+                else {
+                    HP /= 2;
+                }
+            }
+
+            if (HP <= 0){
+                turn[i] = j + 1;
+                break;
+            }
+        }
     }
-    if (n & 1 && k & 1 || !(n & 1) && !(k & 1)) cout << "YES";
-    else cout << "NO";
+
+    for(auto i: turn){
+        cout << i << ' ';
+    }
 
     return 0;
 }

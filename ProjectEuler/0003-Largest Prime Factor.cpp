@@ -37,7 +37,6 @@ mt19937                 rng(chrono::steady_clock::now().time_since_epoch().count
 #define REPD(i, n)      FORD(i, n - 1, 0)
 
 #define prime 600851475143
-#define p_ex 6857
 
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 

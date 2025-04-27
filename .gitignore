@@ -11,7 +11,7 @@
 *.cph/
 
 # Ignore temporary files
-temp/
+*temp
 
 # Ignore test files (if this is a separate directory for testing purposes)
-test/
+*test

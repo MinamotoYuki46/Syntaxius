@@ -1,4 +1,17 @@
+# Ignore VSCode settings
 .vscode/
-.exe
-.json
-.cph/
+
+# Ignore compiled executable files
+*.exe
+
+# Ignore JSON files (optional, depending on your use case)
+*.json
+
+# Ignore competitive programming submission or solution files (if this is a custom extension)
+*.cph/
+
+# Ignore temporary files
+temp/
+
+# Ignore test files (if this is a separate directory for testing purposes)
+test/

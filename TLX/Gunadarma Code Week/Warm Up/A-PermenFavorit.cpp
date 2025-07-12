@@ -57,7 +57,7 @@ int32_t main(){
         candy[x]++;
     }
 
-    cout << candy[k];
+    cout << candy[k];                                                                                                                                                     
 
     return 0;
 }

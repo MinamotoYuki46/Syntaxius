@@ -54,9 +54,8 @@ int32_t main(){
     for (int i = k; i > 0; i--) cin >> w[i] >> h[i];
     for (int i = 0; i <= k; i++){
         for (int j = 0; j <= n; j++){
-            if (!i || !j){
+            if (i == 0 || j == 0){
                 dp[i][j] = 0;
-                continue;
             }
             else if (j >= w[i]) dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - w[i]] + h[i]);
             else dp[i][j] = dp[i - 1][j];

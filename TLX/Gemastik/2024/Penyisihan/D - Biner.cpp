@@ -45,28 +45,38 @@ void c_p_c(){
 #endif
 }
 
+unsigned long long comb(int n, int r){
+    if (r == 0 || r == n) return 1;
+    if (r > n) return 0;
+    r = min(r, n - r);
+
+    unsigned long long res = 1;
+    for(unsigned long long i = 1; i < r; i++){
+        res *= (n - i);
+        res /= (i + 1ULL);
+    }
+    return res;
+}
+
 int32_t main(){
     //c_p_c();
     ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+    unsigned long long n; cin >> n;
 
-    int n, w; cin >> n >> w;
-    vi item(n), weight(n);
-    vi dp(w + 1, 0);
+    unsigned long long res = 0;
+    int bitSet = 30, limit = 63;
 
-    REP(i, n){
-        cin >> item[i] >> weight[i];
-    }
-
-    REP(i, n) {
-        FORD(j, w, item[i]) {
-            dp[j] = max(dp[j], dp[j - item[i]] + weight[i]);
+    while (bitSet > 0){
+        unsigned long long sum = comb(limit, bitSet);
+        if (n > sum){
+            res |= (1ULL << limit);
+            n -= sum;
+            bitSet--;
         }
+        limit--;
     }
 
-    // REP(i, w + 1) cout << dp[i] << ' ';
-    // cout << '\n';
-
-    cout << dp[w];
+    cout << res;
 
     return 0;
 }

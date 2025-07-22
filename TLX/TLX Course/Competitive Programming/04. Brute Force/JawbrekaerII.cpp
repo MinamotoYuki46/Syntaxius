@@ -45,28 +45,44 @@ void c_p_c(){
 #endif
 }
 
+bool visited[25][25];
+int board[25][25];
+int point = 0, maxPoint = INT_MIN;
+int r, c;
+
+void traverse(int x, int y, int ball){
+    if (x < 0 || x >= r || y < 0 || y > c) return;
+    else {
+        if (visited[x][y]) return;
+        else {
+            if (board[x][y] == ball){
+                visited[x][y] = true;
+                point++;
+
+                traverse(x - 1, y, ball);
+                traverse(x + 1, y, ball);
+                traverse(x, y - 1, ball);
+                traverse(x, y + 1, ball);
+            }
+        }
+    }
+}
+
 int32_t main(){
     //c_p_c();
     ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+    cin >> r >> c;
+    REP(i, r) REP(j, c) cin >> board[i][j];
 
-    int n, w; cin >> n >> w;
-    vi item(n), weight(n);
-    vi dp(w + 1, 0);
-
-    REP(i, n){
-        cin >> item[i] >> weight[i];
+    REP(i, r) REP(j, c){
+        if (visited[i][j]) continue;
+        int ball = board[i][j];
+        traverse(i, j, ball);
+        maxPoint =  max(point, maxPoint);
+        point = 0;
     }
 
-    REP(i, n) {
-        FORD(j, w, item[i]) {
-            dp[j] = max(dp[j], dp[j - item[i]] + weight[i]);
-        }
-    }
-
-    // REP(i, w + 1) cout << dp[i] << ' ';
-    // cout << '\n';
-
-    cout << dp[w];
+    cout << maxPoint * (maxPoint - 1);
 
     return 0;
 }

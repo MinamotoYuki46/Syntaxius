@@ -49,24 +49,24 @@ int32_t main(){
     //c_p_c();
     ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
 
-    int n, w; cin >> n >> w;
-    vi item(n), weight(n);
-    vi dp(w + 1, 0);
+    int n, target; cin >> n >> target;
+    vi stones(n);
 
-    REP(i, n){
-        cin >> item[i] >> weight[i];
-    }
+    REP(i, n) cin >> stones[i];
 
-    REP(i, n) {
-        FORD(j, w, item[i]) {
-            dp[j] = max(dp[j], dp[j - item[i]] + weight[i]);
+    mii step; 
+    step[0] = 1;
+
+    for(auto i: stones){
+        mii temp;
+        for(auto [num, count] : step){
+            temp[num + i] += count;
+            temp[num - i] -= count;
         }
+        step = temp;
     }
 
-    // REP(i, w + 1) cout << dp[i] << ' ';
-    // cout << '\n';
-
-    cout << dp[w];
+    cout << step[target];
 
     return 0;
 }

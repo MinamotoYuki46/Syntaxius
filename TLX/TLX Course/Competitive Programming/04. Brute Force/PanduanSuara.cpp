@@ -45,28 +45,45 @@ void c_p_c(){
 #endif
 }
 
+int m, n;
+int ducks[10001], group[10001];
+
+void margin(int cur, int rem){
+    if (cur == n && rem == 0){
+        REP(i, n - 1) cout << ducks[group[i]] << ' ';
+        exit(0);
+    }
+    else {
+        if (rem) {
+            int x = group[cur - 1] + m / n + 1;
+            if (ducks[x] != ducks[x - 1]) {
+                group[cur] = x;
+                margin(cur + 1, rem - 1);
+            }
+        }
+
+        int x = group[cur - 1] + m / n;
+        if (ducks[x] != ducks[x - 1]) {
+            group[cur] = x;
+            margin(cur + 1, rem );
+        }
+        
+    }
+}
+
 int32_t main(){
     //c_p_c();
     ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+    cin >> m;
+    REP(i, m) cin >> ducks[i];
+    sort(ducks, ducks + m);
 
-    int n, w; cin >> n >> w;
-    vi item(n), weight(n);
-    vi dp(w + 1, 0);
-
-    REP(i, n){
-        cin >> item[i] >> weight[i];
-    }
-
-    REP(i, n) {
-        FORD(j, w, item[i]) {
-            dp[j] = max(dp[j], dp[j - item[i]] + weight[i]);
-        }
-    }
-
-    // REP(i, w + 1) cout << dp[i] << ' ';
+    // REP(i, m) cout << ducks[i] << ' ';
     // cout << '\n';
 
-    cout << dp[w];
+    cin >> n;
+
+    margin(0, m % n);
 
     return 0;
 }

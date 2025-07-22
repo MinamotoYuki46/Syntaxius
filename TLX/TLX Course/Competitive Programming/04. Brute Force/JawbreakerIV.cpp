@@ -45,28 +45,68 @@ void c_p_c(){
 #endif
 }
 
+int r, c;
+
+
+int traverse(vii & board, int x, int y, int colour){
+    if (x < 0 || x >= r || y < 0 || y >= c || board[x][y] != colour) return 0;
+    int res = 1;
+    board[x][y] = 0;
+
+    res += traverse(board, x + 1, y, colour);
+    res += traverse(board, x - 1, y, colour);
+    res += traverse(board, x, y + 1, colour);
+    res += traverse(board, x, y - 1, colour);
+
+    return res;
+}
+
+void restructure(vii & board){
+    REP(j, c){
+        int target = r - 1;
+        REPD(i, r){
+            if (board[i][j] != 0) {
+                swap(board[i][j], board[target][j]);
+                target--;
+            }
+        }
+    }
+}
+
+
 int32_t main(){
     //c_p_c();
     ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+    cin >> r >> c;
+    vii board (r, vi (c)), temp (r, vi (c));
 
-    int n, w; cin >> n >> w;
-    vi item(n), weight(n);
-    vi dp(w + 1, 0);
+    REP(i, r) REP(j, c) cin >> board[i][j];
+    temp = board;
 
-    REP(i, n){
-        cin >> item[i] >> weight[i];
+    int res = 0;
+
+    REP(i1, r) REP(j1, c){
+        int a = traverse(temp, i1, j1, temp[i1][j1]);
+
+        if (a > 1) {
+            int pts1 = a * (a - 1);
+            restructure(temp);
+            res = max(res, pts1);
+
+            REP(i2, r) REP(j2, c){
+                if (temp[i2][j2] == 0) continue;
+
+                int b = traverse(temp, i2, j2, temp[i2][j2]);
+                if (b > 1){
+                    int pts2 = b * (b - 1);
+                    res = max(res, pts1 + pts2);
+                }
+            }
+        }       
+        temp = board;
     }
 
-    REP(i, n) {
-        FORD(j, w, item[i]) {
-            dp[j] = max(dp[j], dp[j - item[i]] + weight[i]);
-        }
-    }
-
-    // REP(i, w + 1) cout << dp[i] << ' ';
-    // cout << '\n';
-
-    cout << dp[w];
+    cout << res;
 
     return 0;
 }

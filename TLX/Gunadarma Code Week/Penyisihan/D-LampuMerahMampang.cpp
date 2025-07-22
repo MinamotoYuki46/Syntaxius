@@ -48,25 +48,11 @@ void c_p_c(){
 int32_t main(){
     //c_p_c();
     ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+    int x, n; cin >> x >> n;
 
-    int n, w; cin >> n >> w;
-    vi item(n), weight(n);
-    vi dp(w + 1, 0);
+    vi p (n + 1); 
 
-    REP(i, n){
-        cin >> item[i] >> weight[i];
-    }
 
-    REP(i, n) {
-        FORD(j, w, item[i]) {
-            dp[j] = max(dp[j], dp[j - item[i]] + weight[i]);
-        }
-    }
-
-    // REP(i, w + 1) cout << dp[i] << ' ';
-    // cout << '\n';
-
-    cout << dp[w];
 
     return 0;
 }

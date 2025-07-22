@@ -45,28 +45,39 @@ void c_p_c(){
 #endif
 }
 
+unordered_set<int> res;
+
+void dfs(const string& str, int idx, int cur, int last){
+    if (str.size() == idx) {
+        res.insert(cur);
+        return;
+    }
+
+    int num = 0;
+    FOR(i, idx, str.size()){
+        num = num * 10 + (str[i] - '0');
+
+        dfs(str, i + 1, cur + num, num);
+        dfs(str, i + 1, cur - num, - num);
+
+        if (idx > 2) continue;
+    }
+}
+
 int32_t main(){
     //c_p_c();
     ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+    string str; cin >> str;
 
-    int n, w; cin >> n >> w;
-    vi item(n), weight(n);
-    vi dp(w + 1, 0);
+    int num = 0;
+    REP(i, str.size()){
+        num = num * 10 + (str[i] - '0');
+        dfs(str, i + 1, num, num);
 
-    REP(i, n){
-        cin >> item[i] >> weight[i];
+        if (i == 0) continue;
     }
 
-    REP(i, n) {
-        FORD(j, w, item[i]) {
-            dp[j] = max(dp[j], dp[j - item[i]] + weight[i]);
-        }
-    }
-
-    // REP(i, w + 1) cout << dp[i] << ' ';
-    // cout << '\n';
-
-    cout << dp[w];
+    cout << res.size();
 
     return 0;
 }

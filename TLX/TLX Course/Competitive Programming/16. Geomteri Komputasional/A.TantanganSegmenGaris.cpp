@@ -10,7 +10,9 @@ using namespace std;
 #define mp              make_pair
 #define pii             pair<int,int>
 #define vi              vector<int>
+#define vb              vector<bool>
 #define vii             vector<vi>
+#define vbb             vector<vb>
 #define mii             map<int,int>
 #define pqb             priority_queue<int>
 #define pqs             priority_queue<int, vi, greater<int>>
@@ -40,30 +42,46 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 void c_p_c(){
 #ifndef ONLINE_JUDGE
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
+	freopen("input.txt", "r", stdin);
+	freopen("output.txt", "w", stdout);
 #endif
 }
 
-// Problem 1
+int cross_prod(const pii & a, const pii & b, const pii & c){
+	return (b.ff - a.ff) * (c.ss - a.ss) - (b.ss - a.ss) * (c.ff - a.ff);
+}
 
-// If we list all the natural numbers below 10
-// that are multiples of 3 or 5, we get 3, 5, 6 and 9. The sum of these multiples is 23.
+bool segment(const pii & a, const pii & b, const pii & c){
+	if (cross_prod(a, b, c) != 0) return false;
 
-// Find the sum of all the multiples of
-// 3 or 5 below 1000 .
+	return min(a.ff, b.ff) <= c.ff && c.ff <= max(a.ff, b.ff) &&  min(a.ss, b.ss) <= c.ss && c.ss <= max(a.ss, b.ss);
+}
 
+bool intersect(const pii & a, const pii & b, const pii & c, const pii & d){
+	int p1 = cross_prod(a, b, c), p2 = cross_prod(a, b, d), p3 = cross_prod(c, d, a), p4 = cross_prod(c, d, b);
 
+	if (p1 == 0 && segment(a, b, c) || p2 == 0  && segment(a, b, d) || p3 == 0 && segment(c, d, a) || p4 == 0 && segment(c, d, b)) return true;
 
-
-int firstSum(int x){
-    return x * (x + 1) /2;
+	return ((p1 > 0 && p2 < 0) || (p1 < 0 && p2 > 0)) && ((p3 > 0 && p4 < 0) || (p3 < 0 && p4 > 0));
 }
 
 int32_t main(){
-    //c_p_c();
-    ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
-    cout << firstSum((1000-1)/3) * 3 +  firstSum((1000-1)/5) * 5 - firstSum((1000-1)/15) * 15;
+	//c_p_c();
+	ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
 
-    return 0;
+	w(tc){
+		int x1, y1, x2, y2, x3, y3, x4, y4;
+		cin >> x1 >> y1 >> x2 >> y2 >> x3 >> y3 >> x4 >> y4;
+
+		int x_min = min(x1, x2), x_max = max(x1, x2);
+		int y_min = min(y1, y2), y_max = max(y1, y2);
+
+		pii a {x_min, y_min}, b {x_min, y_max}, c {x_max, y_max}, d {x_max, y_min}, s {x3, y3}, e {x4, y4};
+
+		bool flag = intersect(s, e, a, b) || intersect(s, e, b, c) || intersect(s, e, c, d) || intersect(s, e, d, a);
+
+		cout << (flag?"YA":"TIDAK") << '\n';
+	}
+
+	return 0;
 }

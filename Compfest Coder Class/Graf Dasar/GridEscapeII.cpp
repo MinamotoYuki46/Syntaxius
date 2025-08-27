@@ -10,7 +10,9 @@ using namespace std;
 #define mp              make_pair
 #define pii             pair<int,int>
 #define vi              vector<int>
+#define vb              vector<bool>
 #define vii             vector<vi>
+#define vbb             vector<vb>
 #define mii             map<int,int>
 #define pqb             priority_queue<int>
 #define pqs             priority_queue<int, vi, greater<int>>
@@ -40,30 +42,58 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 void c_p_c(){
 #ifndef ONLINE_JUDGE
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
+	freopen("input.txt", "r", stdin);
+	freopen("output.txt", "w", stdout);
 #endif
 }
 
-// Problem 1
+int r, c;
 
-// If we list all the natural numbers below 10
-// that are multiples of 3 or 5, we get 3, 5, 6 and 9. The sum of these multiples is 23.
+vector<vector<char>> grid;
+vii dist;
 
-// Find the sum of all the multiples of
-// 3 or 5 below 1000 .
+const int dx[4] = {-1, 1, 0, 0};
+const int dy[4] = {0, 0, -1, 1};
 
+int bfs(int x, int y){
+	queue<pii> q;
+	q.push({x, y});
 
+	dist[x][y] = 0;
 
+	while(!q.empty()){
+		auto [cx, cy] = q.front(); q.pop();
 
-int firstSum(int x){
-    return x * (x + 1) /2;
+		if(cx == r-1 && cy == c-1) return dist[cx][cy];
+
+        REP(i, 4){
+            int nx = cx + dx[i], ny = cy + dy[i];
+
+            if(nx >= 0 && nx < r && ny >= 0 && ny < c){
+                if(grid[nx][ny] == '.' && dist[nx][ny] == INF){
+                    dist[nx][ny] = dist[cx][cy] + 1;
+                    q.push({nx, ny});
+                }
+            }
+        }
+
+	}
+
+	return -1;
 }
 
 int32_t main(){
-    //c_p_c();
-    ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
-    cout << firstSum((1000-1)/3) * 3 +  firstSum((1000-1)/5) * 5 - firstSum((1000-1)/15) * 15;
+	//c_p_c();
+	ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
 
-    return 0;
+	cin >> r >> c;
+
+	grid.assign(r, vector<char> (c));
+	dist.assign(r, vi (c, INF));
+
+	REP(i, r) REP(j, c) cin >> grid[i][j];
+
+	cout << bfs(0, 0);
+
+	return 0;
 }

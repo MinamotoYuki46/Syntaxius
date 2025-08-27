@@ -47,48 +47,74 @@ void c_p_c(){
 #endif
 }
 
-double x_a, y_a, x_b, y_b, x_0, y_0, rad;
+bool check(vector<pii> &polygon, pii &pos) {
+    int size = polygon.size();
+    bool inside = false;
 
-double dist(double x, double y) {
-	return sqrt(x * x + y * y);
+    for (int i = 0, j = size - 1; i < size; j = i++) {
+        int xi = polygon[i].ff, yi = polygon[i].ss;
+        int xj = polygon[j].ff, yj = polygon[j].ss;
+
+        bool intersect = ((yi > pos.ss) != (yj > pos.ss)) &&
+                         (pos.ff < (double)(xj - xi) * (pos.ss - yi) / (double)(yj - yi) + xi);
+
+        if (intersect) inside = !inside;
+    }
+    return inside;
 }
 
-double f(double p){
-	double x_p = x_0 + rad * cos(p);
-	double y_p = y_0 + rad * sin(p);
 
-	return dist(x_a - x_p, y_a - y_p) + dist(x_b - x_p, y_b - y_p);
+double dist(pii &a, pii &b, pii &p){
+    double x1 = a.ff, y1 = a.ss;
+    double x2 = b.ff, y2 = b.ss;
+    double x0 = p.ff, y0 = p.ss;
+
+    double dx = x2 - x1, dy = y2 - y1;
+    double seg_len2 = dx*dx + dy*dy;
+
+    if (seg_len2 == 0.0) {
+        return hypot(x0 - x1, y0 - y1);
+    }
+
+    double t = ((x0 - x1)*dx + (y0 - y1)*dy) / seg_len2;
+
+    if (t < 0.0) {
+        return hypot(x0 - x1, y0 - y1);
+    } else if (t > 1.0) {
+        return hypot(x0 - x2, y0 - y2);
+    } else {
+        double projx = x1 + t*dx;
+        double projy = y1 + t*dy;
+        return hypot(x0 - projx, y0 - projy);
+    }
 }
+
+
 
 int32_t main(){
 	//c_p_c();
 	ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
-	cin >> x_a >> y_a >> x_b >> y_b >> x_0 >> y_0 >> rad;
 
-	double l = atan2(y_a - y_0, x_a - x_0), r = atan2(y_b - y_0, x_b - x_0);
+	int n; cin >> n;
+	vector<pii> point (n);
 
-	cout << "\nL angle: " << l * RAD_TO_DEG << " R angle: " << r * RAD_TO_DEG<< '\n';
+	REP(i, n) cin >> point[i].ff >> point[i].ss;
 
-	if (l > r) swap(l, r);
-	if (r - l > PI){
-		l += 2 * PI;
-		swap(l, r);
+	pii pos; cin >> pos.ff >> pos.ss;
+
+	double ans = 1e5;
+	if(!check(point, pos)){
+		cout << -1;
+		return 0;
+	}
+	else {
+		REP(i, n){
+			double cur_ans = dist(point[i % n], point[ (i + 1) % n], pos);
+			ans = min(ans, cur_ans);
+		}
 	}
 
-	cout << "\nL angle: " << l * RAD_TO_DEG << " R angle: " << r * RAD_TO_DEG<< '\n';
-
-	while(r - l >= EPS){
-		double m1 = l + (r - l)/3, m2 = r - (r - l)/3;
-		double val1 = f(m1), val2 = f(m2);
-
-		if (val1 >= val2) l = m1;
-		else r = m2;
-	}
-
-	cout << "\nL angle: " << l * RAD_TO_DEG << " R angle: " << r * RAD_TO_DEG<< '\n';
-	cout << (l + r)/2 * RAD_TO_DEG<< '\n';
-
-	cout << ps(f((l + r) / 2), 9);
+	cout << ps(ans, 6);
 
 	return 0;
 }

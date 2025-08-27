@@ -10,7 +10,9 @@ using namespace std;
 #define mp              make_pair
 #define pii             pair<int,int>
 #define vi              vector<int>
+#define vb              vector<bool>
 #define vii             vector<vi>
+#define vbb             vector<vb>
 #define mii             map<int,int>
 #define pqb             priority_queue<int>
 #define pqs             priority_queue<int, vi, greater<int>>
@@ -40,30 +42,53 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 void c_p_c(){
 #ifndef ONLINE_JUDGE
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
+	freopen("input.txt", "r", stdin);
+	freopen("output.txt", "w", stdout);
 #endif
 }
 
-// Problem 1
+pii centroid;
 
-// If we list all the natural numbers below 10
-// that are multiples of 3 or 5, we get 3, 5, 6 and 9. The sum of these multiples is 23.
-
-// Find the sum of all the multiples of
-// 3 or 5 below 1000 .
-
-
-
-
-int firstSum(int x){
-    return x * (x + 1) /2;
+bool cmp(pii & a, pii & b){
+	double ang1 = atan2(a.ss - centroid.ss, a.ff - centroid.ff);
+	double ang2 = atan2(b.ss - centroid.ss, b.ff - centroid.ff);
+	return ang1 < ang2;
 }
 
 int32_t main(){
-    //c_p_c();
-    ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
-    cout << firstSum((1000-1)/3) * 3 +  firstSum((1000-1)/5) * 5 - firstSum((1000-1)/15) * 15;
+	//c_p_c();
+	ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+	int n; cin >> n;
+	
+	vector<pii> point (n);
+	REP(i, n) cin >> point[i].ff >> point[i].ss;
 
-    return 0;
+	for(auto &p: point){
+		centroid.ff += p.ff;
+		centroid.ss += p.ss;
+	}
+
+	centroid.ff /= n;
+	centroid.ss /= n;
+
+	sort(all(point), cmp);
+
+	int sign = 0;
+	bool convex = true;
+
+	REP(i, n){
+		int cross_prod = (point[(i + 1) % n].ff - point[i].ff) * (point[(i + 2) % n].ss - point[(i + 1) % n].ss) - (point[(i + 1) % n].ss -point[i].ss) * (point[(i + 2) % n].ff - point[(i + 1) % n].ff);
+
+		if (cross_prod != 0){
+            if (sign == 0) sign = (cross_prod > 0 ? 1 : -1);
+            else if ((cross_prod > 0 && sign < 0) || (cross_prod < 0 && sign > 0)){
+                convex = false;
+                break;
+            }
+        }
+	}
+
+	cout << (convex?"YA":"TIDAK");
+
+	return 0;
 }

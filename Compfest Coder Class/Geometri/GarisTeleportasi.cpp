@@ -10,7 +10,9 @@ using namespace std;
 #define mp              make_pair
 #define pii             pair<int,int>
 #define vi              vector<int>
+#define vb              vector<bool>
 #define vii             vector<vi>
+#define vbb             vector<vb>
 #define mii             map<int,int>
 #define pqb             priority_queue<int>
 #define pqs             priority_queue<int, vi, greater<int>>
@@ -40,30 +42,28 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 void c_p_c(){
 #ifndef ONLINE_JUDGE
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
+	freopen("input.txt", "r", stdin);
+	freopen("output.txt", "w", stdout);
 #endif
 }
 
-// Problem 1
-
-// If we list all the natural numbers below 10
-// that are multiples of 3 or 5, we get 3, 5, 6 and 9. The sum of these multiples is 23.
-
-// Find the sum of all the multiples of
-// 3 or 5 below 1000 .
-
-
-
-
-int firstSum(int x){
-    return x * (x + 1) /2;
-}
-
 int32_t main(){
-    //c_p_c();
-    ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
-    cout << firstSum((1000-1)/3) * 3 +  firstSum((1000-1)/5) * 5 - firstSum((1000-1)/15) * 15;
+	//c_p_c();
+	ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+	double x_0, y_0, x_1, y_1, x_2, y_2; cin >> x_0 >> y_0 >> x_1 >> y_1 >> x_2 >> y_2;
 
-    return 0;
+	double v_x = (x_2 - x_1), v_y = (y_2 - y_1), vv = v_x * v_x + v_y * v_y;
+
+	double ans;
+	if (vv == 0.0) ans = hypot(x_0 - x_1, y_0 - y_1);
+	else {
+		double t = ((x_0 - x_1) * v_x + (y_0 - y_1) * v_y) / vv;
+		if (t < 0.0) t = 0.0;
+		else if (t > 1.0) t = 1.0;
+
+		double p_x = x_1 + t * v_x, p_y = y_1 + t * v_y;
+		ans = hypot(x_0 - p_x, y_0 - p_y);
+	}
+	cout << ps(ans, 6);
+	return 0;
 }

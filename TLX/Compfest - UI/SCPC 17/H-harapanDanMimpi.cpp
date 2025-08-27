@@ -6,11 +6,14 @@ using namespace std;
 #define ff              first
 #define ss              second
 #define int             long long
+#define ull				unsigned long long
 #define pb              push_back
 #define mp              make_pair
 #define pii             pair<int,int>
 #define vi              vector<int>
+#define vb              vector<bool>
 #define vii             vector<vi>
+#define vbb             vector<vb>
 #define mii             map<int,int>
 #define pqb             priority_queue<int>
 #define pqs             priority_queue<int, vi, greater<int>>
@@ -18,7 +21,7 @@ using namespace std;
 #define zrobits(x)      __builtin_ctzll(x)
 #define all(x)          (x).begin(), (x).end()
 
-#define MOD             1000000007
+#define MOD             998'244'353
 #define INF             1e18
 #define EPS             1e-9
 #define DEG_TO_RAD      0.0174532925199432957692
@@ -40,30 +43,72 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 void c_p_c(){
 #ifndef ONLINE_JUDGE
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
+	freopen("input.txt", "r", stdin);
+	freopen("output.txt", "w", stdout);
 #endif
 }
 
-// Problem 1
+ull mod_pow(int a, int b){
+	ull res = 1;
 
-// If we list all the natural numbers below 10
-// that are multiples of 3 or 5, we get 3, 5, 6 and 9. The sum of these multiples is 23.
-
-// Find the sum of all the multiples of
-// 3 or 5 below 1000 .
-
-
-
-
-int firstSum(int x){
-    return x * (x + 1) /2;
+	while (b > 0){
+		if (b & 1) res = res * a % MOD;
+		
+		a = a * a % MOD;
+		b >>= 1;
+	}
+	return res;
 }
 
-int32_t main(){
-    //c_p_c();
-    ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
-    cout << firstSum((1000-1)/3) * 3 +  firstSum((1000-1)/5) * 5 - firstSum((1000-1)/15) * 15;
+ull mod_inv(ull a){
+	return mod_pow(a, MOD - 2);
+}
 
-    return 0;
+ull comb(ull n, ull r){
+	if (r < 0 || r > n) return 0;
+	if (r > n - r) r =  n - r;
+
+	ull num = 1, den = 1;
+
+	for(ull i = 0; i < r; i++){
+		num = num * (n - i) % MOD;
+		den = den * (i + 1) % MOD;
+	}
+
+	return num * mod_inv(den) % MOD;
+}
+
+vector<pii> gen_pair(int x, int y){
+	vector<pii> ans;
+
+	FOR(i, x, y + 1){
+		REP(j, (i / 2) + 1){
+			ans.pb({i - j, j});
+		}
+	}
+
+	return ans;
+}
+
+
+int32_t main(){
+	//c_p_c();
+	ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+
+	w(tc){
+		int l, r; cin >> l >> r;
+		vector<pii> test = gen_pair(l, r);
+
+		ull ans = 0;
+
+		for(auto [x, y]: test){
+			// cout << x << ' ' << y << ' ' << comb(x, y) << '\n';
+
+			ans += comb(x, y);
+		}
+
+		cout << ans << '\n';
+	}
+
+	return 0;
 }

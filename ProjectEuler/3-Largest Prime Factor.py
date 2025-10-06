@@ -1,5 +1,3 @@
-import math
-
 def primeFactor(num: int) -> list[int]:
     factors = []
     i = 2
@@ -14,4 +12,4 @@ def primeFactor(num: int) -> list[int]:
 
 
 if __name__ == "__main__":
-    print(primeFactor(600851475143))
+    print(primeFactor(600_851_475_143))

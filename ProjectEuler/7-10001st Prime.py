@@ -14,7 +14,7 @@ def prime_generator():
 if __name__ == "__main__":
     gen = prime_generator()
     prime = None
-    for i in range(10001):
+    for i in range(10_001):
         prime = next(gen)
     
     print(prime)

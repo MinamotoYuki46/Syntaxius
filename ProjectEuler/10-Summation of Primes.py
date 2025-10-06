@@ -13,4 +13,4 @@ def prime_generator(n:int):
     return primes
 
 if __name__ == "__main__":
-    print(sum(prime_generator(2000000)))
+    print(sum(prime_generator(2_000_000)))

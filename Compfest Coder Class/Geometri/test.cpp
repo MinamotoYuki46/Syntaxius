@@ -11,8 +11,8 @@ using namespace std;
 #define pii             pair<int,int>
 #define vi              vector<int>
 #define vb              vector<bool>
-#define vbb             vector<vb>
 #define vii             vector<vi>
+#define vbb             vector<vb>
 #define mii             map<int,int>
 #define pqb             priority_queue<int>
 #define pqs             priority_queue<int, vi, greater<int>>
@@ -42,33 +42,14 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 void c_p_c(){
 #ifndef ONLINE_JUDGE
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
+	freopen("input.txt", "r", stdin);
+	freopen("output.txt", "w", stdout);
 #endif
 }
 
 int32_t main(){
-    //c_p_c();
-    ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+	//c_p_c();
+	ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
 
-    w(tc){
-        int n; cin >> n;
-        int cnt1 = 0, cnt2 = 0;
-
-        REP(i, n){
-            int c; cin >> c;
-            
-            if(c == 1) cnt1++;
-            else cnt2++;
-        }
-
-        if ((cnt1 + 2 * cnt2) & 1) cout << "NO\n";
-        else {
-            int sum = (cnt1 + 2 * cnt2) / 2;
-
-            if (!(sum & 1) || (sum & 1 && cnt1 != 0)) cout << "YES\n";
-            else cout << "NO\n";
-        }
-    }
-    return 0;
+	return 0;
 }

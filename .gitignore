@@ -1,17 +1,19 @@
-# Ignore VSCode settings
+# --- Directories (Recursive) ---
+# The trailing slash '/' ensures it matches directories only
 .vscode/
+.cph/
 
-# Ignore compiled executable files
-*.exe
+# --- Files (Recursive) ---
+# The '**/' prefix explicitly tells Git "in any directory or subdirectory"
+**/*.exe
+**/*.json
+**/*.txt
 
-# Ignore JSON files (optional, depending on your use case)
-*.json
 
-# Ignore competitive programming submission or solution files (if this is a custom extension)
-*.cph/
+# --- Pattern Matching (Recursive) ---
+# This matches any file or folder ending in "temp" or "test" anywhere in the tree
+**/*temp*
+**/*test*
+**/*tes*
 
-# Ignore temporary files
-*temp
-
-# Ignore test files (if this is a separate directory for testing purposes)
-*test
+**/*.class*

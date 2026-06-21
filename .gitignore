@@ -1,19 +1,116 @@
-# --- Directories (Recursive) ---
-# The trailing slash '/' ensures it matches directories only
-.vscode/
-.cph/
+# =========================================================
+# Editor / IDE - Recursive
+# =========================================================
 
-# --- Files (Recursive) ---
-# The '**/' prefix explicitly tells Git "in any directory or subdirectory"
+**/.vscode/
+**/.idea/
+**/.cph/
+**/*.code-workspace
+
+# =========================================================
+# OS junk - Recursive
+# =========================================================
+
+**/.DS_Store
+**/Thumbs.db
+**/desktop.ini
+
+# =========================================================
+# Build output / binaries - Recursive
+# =========================================================
+
 **/*.exe
-**/*.json
-**/*.txt
+**/*.out
+**/*.o
+**/*.obj
+**/*.a
+**/*.so
+**/*.dll
+**/*.dylib
+**/*.class
+**/*.jar
 
+# =========================================================
+# Build directories - Recursive
+# =========================================================
 
-# --- Pattern Matching (Recursive) ---
-# This matches any file or folder ending in "temp" or "test" anywhere in the tree
+**/build/
+**/dist/
+**/out/
+**/bin/
+**/target/
+**/cmake-build-*/
+**/CMakeFiles/
+**/CMakeCache.txt
+
+# =========================================================
+# Competitive programming helper files - Recursive
+# =========================================================
+
+**/input.txt
+**/output.txt
+**/error.txt
+**/debug.txt
+**/temp.txt
+**/tmp.txt
+**/test.txt
+**/tests.txt
+
+**/*.in
+**/*.ans
+
+# =========================================================
+# Temporary / testing files and folders - Recursive
+# =========================================================
+
 **/*temp*
+**/*tmp*
 **/*test*
+**/*tests*
 **/*tes*
 
-**/*.class*
+# =========================================================
+# Logs / cache - Recursive
+# =========================================================
+
+**/*.log
+**/__pycache__/
+**/*.pyc
+**/*.pyo
+
+# =========================================================
+# Python virtual environments - Recursive
+# =========================================================
+
+**/.venv/
+**/venv/
+**/env/
+
+# =========================================================
+# Node / JS dependencies - Recursive
+# =========================================================
+
+**/node_modules/
+
+# =========================================================
+# Rust / Cargo build output - Recursive
+# =========================================================
+
+**/target/
+
+# =========================================================
+# Java / Kotlin / Gradle - Recursive
+# =========================================================
+
+**/.gradle/
+**/*.iml
+
+# =========================================================
+# Archives - Recursive
+# =========================================================
+
+**/*.zip
+**/*.tar
+**/*.tar.gz
+**/*.rar
+**/*.7z

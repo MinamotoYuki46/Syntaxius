@@ -1,4 +1,4 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 using namespace __gnu_pbds;
 using namespace std;
@@ -10,21 +10,28 @@ using namespace std;
 #define mp              make_pair
 #define pii             pair<int,int>
 #define vi              vector<int>
+#define vb              vector<bool>
+#define vbb             vector<vb>
 #define vii             vector<vi>
 #define mii             map<int,int>
 #define pqb             priority_queue<int>
-#define pqs             priority_queue<int,vi,greater<int> >
+#define pqs             priority_queue<int, vi, greater<int>>
 #define setbits(x)      __builtin_popcountll(x)
-#define zrobits(x)      __builtin_ctzll(x)
+#define trailz(x)       __builtin_ctzll(x)
+#define leadz(x)        __builtin_clzll(x)
 #define all(x)          (x).begin(), (x).end()
 
-#define mod             1000000007
-#define inf             1e18
-#define eps             1e-9
+#define MOD             1000000007
+#define INF             1e18
+#define EPS             1e-9
+#define DEG_TO_RAD      0.0174532925199432957692
+#define RAD_TO_DEG      57.2957795130823208768
+#define PI              3.14159265358979323846
+#define E               2.71828182845904523536
 
-#define ps(x,y)         fixed<<setprecision(y)<<x
-#define mk(arr,n,type)  type *arr=new type[n];
-#define w(x)            int x; cin>>x; while(x--)
+#define ps(x,y)         fixed << setprecision(y) << x
+#define mk(arr,n,type)  type *arr = new type[n];
+#define w(x)            int x; cin >> x; while (x--)
 mt19937                 rng(chrono::steady_clock::now().time_since_epoch().count());
 
 #define FOR(i, a, b)    for (int i = (a); i < (b); ++i)
@@ -41,40 +48,10 @@ void c_p_c(){
 #endif
 }
 
-void solve(vii & prices, int n){
-    int profit = INT_MIN;
-
-    REP(i, n){
-        int picked = prices[0][i];
-        FOR(j, i + 2,  n){
-            profit = max(profit, prices[1][j] - prices[0][i]);
-            
-        }
-    }
-
-    if (profit <= 0){
-        cout << "tidak mungkin";
-    }
-    else{
-        cout << profit;
-    }
-}
-
 
 int32_t main(){
-    // c_p_c();
+    //c_p_c();
     ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
-    int n; cin >> n;
-    vii prices (2, vi (n));
-
-    REP(i, n){
-        cin >> prices[0][i];
-    }
-    REP(j, n){
-        cin >> prices[1][j];
-    }
-
-    solve(prices, n);
 
     return 0;
 }

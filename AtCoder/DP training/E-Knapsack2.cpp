@@ -17,7 +17,8 @@ using namespace std;
 #define pqb             priority_queue<int>
 #define pqs             priority_queue<int, vi, greater<int>>
 #define setbits(x)      __builtin_popcountll(x)
-#define zrobits(x)      __builtin_ctzll(x)
+#define trailz(x)       __builtin_ctzll(x)
+#define leadz(x)        __builtin_clzll(x)
 #define all(x)          (x).begin(), (x).end()
 
 #define MOD             1000000007
@@ -50,6 +51,36 @@ void c_p_c(){
 int32_t main(){
     //c_p_c();
     ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+
+    int n, w; cin >> n >> w;
+
+    vector<pii> item(n);
+    int sum = 0;
+
+    REP(i, n){
+        int u, v; cin >> u >> v;
+        item[i] = {u, v};
+        sum += v;
+    }
+
+    vi dp(sum + 1, INF);
+    dp[0] = 0;
+
+    REP(i, n){
+        FORD(v, sum, item[i].ss){
+            dp[v] = min(dp[v], dp[v - item[i].ss] + item[i].ff);
+        }
+    }
+
+    int ans = 0;
+
+    REP(v, sum + 1){
+        if(dp[v] <= w){
+            ans = v;
+        }
+    }
+
+    cout << ans << '\n';
 
     return 0;
 }
